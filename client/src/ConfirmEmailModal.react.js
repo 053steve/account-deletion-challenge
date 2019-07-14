@@ -43,7 +43,7 @@ class ConfirmEmailModal extends React.PureComponent {
         <span style={{ color: 'red' }}>{errorMessage}</span>
       </div>
     )
-  }  
+  }
   render() {
     return (
       <div>

@@ -2,7 +2,8 @@ import _ from 'lodash'
 import React from 'react'
 
 import ConfirmEmailModal from './ConfirmEmailModal.react'
-import TransferOwnershipModal, {
+import {
+  TransferOwnershipModal,
   WorkspaceGroupRows,
 } from './TransferOwnershipModal.react'
 import FeedbackSurveyModal from './FeedbackSurveyModal.react'
@@ -46,13 +47,13 @@ export default class TerminateModalFlow extends React.Component {
 
   getTransferData = () => {
     const { workspaceId, toUserId, status } = this.props.transferOwnershipStatus
-    const transferData = this.state.transferData
+    const { transferData } = this.state
     const updateData = _.reduce(
       transferData,
       (result, assign) => {
         if (
           assign.workspaceId === workspaceId &&
-          assign.toUser._id === toUserId
+          assign.toUser.id === toUserId
         ) {
           result.push(Object.assign({}, assign, { status }))
         } else {
@@ -142,7 +143,7 @@ export default class TerminateModalFlow extends React.Component {
     if (this.props.user.email === this.state.email) {
       const payload = {
         transferTargets: _.map(this.getTransferData(), assign => ({
-          userId: assign.toUser._id,
+          userId: assign.toUser.id,
           spaceId: assign.workspaceId,
         })),
         reason: this.state.feedbacks,

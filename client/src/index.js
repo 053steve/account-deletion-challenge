@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 import './index.css'
-import MockDataProvider from './MockDataProvider'
+import MockDataProvider from './MockDataProvider.react'
 import TerminateModalFlow from './TerminateModalFlow.react'
 
 ReactDOM.render(

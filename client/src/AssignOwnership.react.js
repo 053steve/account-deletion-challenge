@@ -4,6 +4,7 @@ import React from 'react'
 
 import * as LoadState from './LoadState'
 
+
 export default class AssignOwnership extends React.Component {
   static propTypes = {
     user: PropTypes.object,
