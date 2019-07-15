@@ -12,6 +12,17 @@ import * as LoadState from './LoadState'
 import AssignOwnership from './AssignOwnership.react'
 
 export default class TerminateModalFlow extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      activeModal: 'transfer',
+      transferData: [],
+      feedbacks: [],
+      comment: '',
+      email: '',
+    }
+  }
+
   static propTypes = {
     user: React.PropTypes.object.isRequired,
     loading: React.PropTypes.bool,
@@ -27,13 +38,7 @@ export default class TerminateModalFlow extends React.Component {
     rediectToHomepage: React.PropTypes.func,
   }
 
-  state = {
-    activeModal: 'transfer',
-    transferData: [],
-    feedbacks: [],
-    comment: '',
-    email: '',
-  }
+
 
   componentDidMount() {
     this.props.fetchRelatedWorkspaces()
@@ -110,6 +115,7 @@ export default class TerminateModalFlow extends React.Component {
       this.setState({ activeModal: 'feedback' })
     } else if (this.state.activeModal === 'feedback') {
       const feedbackRefs = this.getRefsValues(this.refs, 'feedbackForm')
+      console.log(feedbackRefs)
       this.setState({
         activeModal: 'confirm',
         feedbacks: _.map(feedbackRefs, ref => ({
@@ -117,8 +123,11 @@ export default class TerminateModalFlow extends React.Component {
           comment: ref.value,
         })),
       })
+      this.submitSurvey()
     }
-    this.submitSurvey()
+
+    // Bug: Submit survey should not be called right now
+
   }
 
   onGoToPreviousStep = () => {

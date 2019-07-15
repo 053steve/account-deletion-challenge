@@ -13,7 +13,7 @@ export default class MockDataProvider extends React.Component {
 
     this.state = {
       user: {
-        id: 'user1',
+        _id: 'user1',
         name: 'Ross Lynch',
         email: 'ross@example.com',
       },
@@ -28,7 +28,7 @@ export default class MockDataProvider extends React.Component {
 
       fetchRelatedWorkspaces: async () => {
         const response = await window.fetch(
-          `https://us-central1-tw-account-deletion-challenge.cloudfunctions.net/fetchWorkspaces?userId=${this.state.user.id}`,
+          `https://us-central1-tw-account-deletion-challenge.cloudfunctions.net/fetchWorkspaces?userId=${this.state.user._id}`,
           {
             mode: 'cors',
           }
@@ -52,7 +52,7 @@ export default class MockDataProvider extends React.Component {
           {
             transferOwnershipStatus: {
               workspaceId: workspace.spaceId,
-              toUserId: this.state.user.id,
+              toUserId: this.state.user._id,
               ...LoadState.loading,
             },
           },
@@ -67,8 +67,8 @@ export default class MockDataProvider extends React.Component {
                 },
                 body: JSON.stringify({
                   workspaceId: workspace.spaceId,
-                  fromUserId: this.state.user.id,
-                  toUserId: user.id,
+                  fromUserId: this.state.user._id,
+                  toUserId: user._id,
                 }),
               }
             )
@@ -76,7 +76,7 @@ export default class MockDataProvider extends React.Component {
               this.setState({
                 transferOwnershipStatus: {
                   workspaceId: workspace.spaceId,
-                  toUserId: user.id,
+                  toUserId: user._id,
                   ...LoadState.completed,
                 },
               })
@@ -84,7 +84,7 @@ export default class MockDataProvider extends React.Component {
               this.setState({
                 transferOwnershipStatus: {
                   workspaceId: workspace.spaceId,
-                  toUserId: user.id,
+                  toUserId: user._id,
                   ...LoadState.error,
                 },
               })

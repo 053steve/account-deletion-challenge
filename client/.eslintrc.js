@@ -15,6 +15,8 @@ module.exports = {
     "rules": {
         "default-case": 1,
         "consistent-return": 1,
+        "no-underscore-dangle": 0,
+        "no-string-refs": 1,
         "import/no-extraneous-dependencies": [
             "error", {
                 "devDependencies": true

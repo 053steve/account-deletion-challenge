@@ -1,4 +1,4 @@
-export const feedbackSurveyItems = [
+const feedbackSurveyItems = [
   {
     stack: 'dont_understand',
     title: 'I do not understand how to use this.',
@@ -41,3 +41,5 @@ export const feedbackSurveyItems = [
     canComment: true,
   },
 ]
+// - Changed export surveyFeedback item to export default
+export default feedbackSurveyItems
