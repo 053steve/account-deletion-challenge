@@ -25,8 +25,8 @@ export const isRefreshing = state => state.status === STATUS_REFRESHING
 export const isLoaded = state =>
   state.status === STATUS_COMPLETED || state.status === STATUS_REFRESHING
 
-export const handleLoaded = state => completed
-export const handleOutdated = state => outdated
+export const handleLoaded = () => completed
+export const handleOutdated = () => outdated
 export const handleLoadRequested = state => {
   return state.status === STATUS_OUTDATED ? refreshing : fetching
 }

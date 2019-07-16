@@ -7,7 +7,7 @@ import {
   WorkspaceGroupRows,
 } from './TransferOwnershipModal.react'
 import FeedbackSurveyModal from './FeedbackSurveyModal.react'
-import { submitToSurveyMonkeyDeleteAccount } from '../SurveyService'
+import { submitToSurveyMonkeyDeleteAccount } from '../services/SurveyService'
 import * as LoadState from '../constants/LoadState'
 import AssignOwnership from './AssignOwnership.react'
 
@@ -37,8 +37,6 @@ export default class TerminateModalFlow extends React.Component {
     resetTerminateAccountStatus: React.PropTypes.func,
     rediectToHomepage: React.PropTypes.func,
   }
-
-
 
   componentDidMount() {
     this.props.fetchRelatedWorkspaces()
@@ -152,7 +150,7 @@ export default class TerminateModalFlow extends React.Component {
     if (this.props.user.email === this.state.email) {
       const payload = {
         transferTargets: _.map(this.getTransferData(), assign => ({
-          userId: assign.toUser.id,
+          userId: assign.toUser._id,
           spaceId: assign.workspaceId,
         })),
         reason: this.state.feedbacks,
