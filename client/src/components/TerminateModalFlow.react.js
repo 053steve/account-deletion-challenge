@@ -7,8 +7,8 @@ import {
   WorkspaceGroupRows,
 } from './TransferOwnershipModal.react'
 import FeedbackSurveyModal from './FeedbackSurveyModal.react'
-import { submitToSurveyMonkeyDeleteAccount } from './SurveyService'
-import * as LoadState from './LoadState'
+import { submitToSurveyMonkeyDeleteAccount } from '../SurveyService'
+import * as LoadState from '../constants/LoadState'
 import AssignOwnership from './AssignOwnership.react'
 
 export default class TerminateModalFlow extends React.Component {

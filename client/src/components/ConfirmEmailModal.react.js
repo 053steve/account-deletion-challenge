@@ -2,7 +2,7 @@ import _ from 'lodash'
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import { isLoading } from './LoadState'
+import { isLoading } from '../constants/LoadState'
 
 class ConfirmEmailModal extends React.PureComponent {
   static propTypes = {
@@ -44,6 +44,7 @@ class ConfirmEmailModal extends React.PureComponent {
       </div>
     )
   }
+
   render() {
     return (
       <div>

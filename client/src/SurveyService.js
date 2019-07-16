@@ -46,9 +46,8 @@ const getSurveyPayload = (feedbackRefs, comment) => {
         text: ref.value || 'n/a',
         other_id: CANCEL_WORKSPACE.CHOICE_ID.OTHERS,
       }
-    } else {
-      return { choice_id: getChoiceID(ref.key) }
     }
+    return { choice_id: getChoiceID(ref.key) }
   })
   const surveyPayload = {
     pages: [
@@ -74,10 +73,7 @@ const getSurveyPayload = (feedbackRefs, comment) => {
   return surveyPayload
 }
 
-export const submitToSurveyMonkeyDeleteAccount = async ({
-  feedbackRefs,
-  comment,
-}) => {
+export const submitToSurveyMonkeyDeleteAccount = async ({ feedbackRefs, comment }) => {
   const surveyPayload = getSurveyPayload(feedbackRefs, comment)
 
   const response = await window.fetch(

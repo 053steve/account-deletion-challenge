@@ -94,6 +94,7 @@ export default class MockDataProvider extends React.Component {
       },
 
       terminateAccount: async payload => {
+        console.log(payload)
         // Note that there is 30% chance of getting error from the server
         const response = await window.fetch(
           'https://us-central1-tw-account-deletion-challenge.cloudfunctions.net/terminateAccount',
@@ -108,9 +109,7 @@ export default class MockDataProvider extends React.Component {
         )
         if (response.status === 200) {
           this.setState({
-            terminateAccountStatus: LoadState.handleLoaded(
-              this.state.terminateAccountStatus
-            ),
+            terminateAccountStatus: LoadState.handleLoaded(),
           })
         } else {
           this.setState({

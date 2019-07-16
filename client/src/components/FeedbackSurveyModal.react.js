@@ -1,8 +1,7 @@
 import _ from 'lodash'
 import PropTypes from 'prop-types'
 import React from 'react'
-
-import feedbackSurveyItems from './FeedbackSurveyItems'
+import { feedbackSurveyItems } from '../constants/FeedbackSurveyItems'
 
 class FeedbackSurveyModal extends React.PureComponent {
   static propTypes = {
@@ -67,7 +66,10 @@ class FeedbackSurveyModal extends React.PureComponent {
   }
 
   renderCommentForm() {
-    if (!this.props.showCommentForm) return
+    if (!this.props.showCommentForm) {
+      return
+    }
+
     return (
       <div style={{ marginTop: '2rem' }}>
         Comments:
