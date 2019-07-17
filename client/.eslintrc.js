@@ -13,11 +13,12 @@ module.exports = {
     "parser": "babel-eslint",
     "plugins": ["react"],
     "rules": {
-        "default-case": 1,
+        "default-case": 0,
         "consistent-return": 0,
         "no-underscore-dangle": 0,
         "no-string-refs": 1,
         "no-shadow": 1,
+        "class-methods-use-this": 0,
         "import/prefer-default-export": 0,
         "no-string-refs": 0,
         "import/no-extraneous-dependencies": [

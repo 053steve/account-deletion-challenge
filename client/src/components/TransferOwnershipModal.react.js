@@ -52,5 +52,3 @@ TransferOwnershipModal.propTypes = {
   loading: PropTypes.bool,
   disabledNextPage: PropTypes.bool,
 }
-
-export default TransferOwnershipModal
