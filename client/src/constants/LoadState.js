@@ -32,5 +32,5 @@ export const handleLoadRequested = state => {
 }
 export const handleLoadFailedWithError = error => {
   const nextState = initWithError(error)
-  return state => nextState
+  return () => nextState
 }

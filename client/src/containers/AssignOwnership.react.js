@@ -15,9 +15,6 @@ export default class AssignOwnership extends React.Component {
 
   getAddedMember() {
     const { workspace, transferData } = this.props
-    console.log('this.getAddedMember')
-    console.log(workspace)
-    console.log(transferData)
     return _.chain(transferData)
       .reject(LoadState.isError || LoadState.isLoading)
       .find(assign => assign.workspaceId === workspace.spaceId)
