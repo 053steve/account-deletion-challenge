@@ -1,5 +1,9 @@
 import _ from 'lodash'
 
+export const rediectToHomepage = () => {
+  window.location = 'http://www.example.com/'
+}
+
 export const getRefsValues = (refs, refName) => {
   const item = _.get(refs, refName, false)
   if (!item || _.isEmpty(item.refs)) return {}

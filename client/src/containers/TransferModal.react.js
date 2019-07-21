@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-// import { connect } from 'react-redux'
+import { connect } from 'react-redux'
 import { TransferOwnershipModal } from '../components/TransferOwnershipModal.react'
 import { WorkspaceGroupRows } from '../components/WorkSpaceGroupRows.react'
 import AssignOwnership from './AssignOwnership.react'
@@ -19,8 +19,6 @@ class TransferModal extends React.PureComponent {
   }
 
   render() {
-    console.log('this.props.isLoading')
-    console.log(this.props.isLoading)
     const transferData = this.props.getTransferData
     const totalAssigned = transferData.length
     const totalWorkspaceRequiredTransfer = this.props.requiredTransferWorkspaces
@@ -56,8 +54,10 @@ class TransferModal extends React.PureComponent {
 }
 
 // const mapStateToProps = state => {
+//   console.log(state)
 //   return {
-//     isLoading: state.isLoading,
+// requiredTransferWorkspaces: state.requiredTransferWorkspaces,
+// deleteWorkspaces: state.deleteWorkspaces,
 //   }
 // }
 

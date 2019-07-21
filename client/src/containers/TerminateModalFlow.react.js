@@ -1,14 +1,21 @@
 import _ from 'lodash'
 import React from 'react'
-
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 import ConfirmEmailModal from './ConfirmEmailModal.react'
 import FeedbackSurveyModal from './FeedbackSurveyModal.react'
+import { terminateAccountError, resetTerminateAccountStatus } from '../actions'
+import {
+  fetchRelatedWorkspaces,
+  transferOwnership,
+  terminateAccount,
+} from '../services/ApiService'
 import { submitToSurveyMonkeyDeleteAccount } from '../services/SurveyService'
 import * as LoadState from '../constants/LoadState'
 import TransferModal from './TransferModal.react'
-import { getRefsValues } from '../utils/utils'
+import { getRefsValues, rediectToHomepage } from '../utils/utils'
 
-export default class TerminateModalFlow extends React.Component {
+class TerminateModalFlow extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -21,31 +28,33 @@ export default class TerminateModalFlow extends React.Component {
   }
 
   static propTypes = {
-    user: React.PropTypes.object.isRequired,
-    loading: React.PropTypes.bool,
-    requiredTransferWorkspaces: React.PropTypes.array,
-    deleteWorkspaces: React.PropTypes.array,
-    fetchRelatedWorkspaces: React.PropTypes.func,
-    transferOwnershipStatus: React.PropTypes.object,
-    transferOwnership: React.PropTypes.func,
-    terminateAccount: React.PropTypes.func,
-    terminateAccountError: React.PropTypes.func,
-    terminateAccountStatus: React.PropTypes.object,
-    resetTerminateAccountStatus: React.PropTypes.func,
-    rediectToHomepage: React.PropTypes.func,
+    user: React.PropTypes.object.isRequired, //
+    loading: React.PropTypes.bool, //
+    requiredTransferWorkspaces: React.PropTypes.array, //
+    deleteWorkspaces: React.PropTypes.array, //
+    fetchRelatedWorkspaces: React.PropTypes.func, //
+    transferOwnershipStatus: React.PropTypes.object, //
+    transferOwnership: React.PropTypes.func, //
+    terminateAccount: React.PropTypes.func, //
+    terminateAccountError: React.PropTypes.func, //
+    terminateAccountStatus: React.PropTypes.object, //
+    resetTerminateAccountStatus: React.PropTypes.func, //
+    // rediectToHomepage: React.PropTypes.func, // dont need to be as pros anymore
   }
 
   componentDidMount() {
-    this.props.fetchRelatedWorkspaces()
+    this.props.fetchRelatedWorkspaces(this.props.user)
   }
 
   componentWillReceiveProps(nextProps) {
     if (LoadState.isLoaded(nextProps.terminateAccountStatus)) {
-      this.props.rediectToHomepage()
+      // this.props.rediectToHomepage()
+      rediectToHomepage()
     }
   }
 
   getTransferData = () => {
+    console.log(this.props)
     const { workspaceId, toUserId, status } = this.props.transferOwnershipStatus
     const { transferData } = this.state
     const updateData = _.reduce(
@@ -117,9 +126,9 @@ export default class TerminateModalFlow extends React.Component {
     }
   }
 
-  onAssignToUser = (workspace, user) => {
-    this.props.transferOwnership(user, workspace)
-    this.assignToUser(workspace, user)
+  onAssignToUser = (workspace, toUser) => {
+    this.props.transferOwnership(this.props.user, toUser, workspace)
+    this.assignToUser(workspace, toUser)
   }
 
   onChangeComment = e => {
@@ -147,6 +156,7 @@ export default class TerminateModalFlow extends React.Component {
   }
 
   renderTransferModal() {
+    console.log(this.props)
     return (
       <TransferModal
         getTransferData={this.getTransferData()}
@@ -198,3 +208,33 @@ export default class TerminateModalFlow extends React.Component {
     }
   }
 }
+
+const mapStateToProps = state => {
+  // console.log(state)
+  return {
+    user: state.appState.user,
+    loading: state.appState.loading,
+    transferOwnershipStatus: state.appState.transferOwnershipStatus,
+    requiredTransferWorkspaces: state.appState.requiredTransferWorkspaces,
+    deleteWorkspaces: state.appState.deleteWorkspaces,
+    terminateAccountStatus: state.appState.terminateAccountStatus,
+  }
+}
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      fetchRelatedWorkspaces,
+      transferOwnership,
+      terminateAccount,
+      terminateAccountError,
+      resetTerminateAccountStatus,
+    },
+    dispatch
+  )
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TerminateModalFlow)
+// export default TerminateModalFlow
