@@ -17,6 +17,7 @@ const appStateInit = {
     ...LoadState.pending,
   },
   terminateAccountStatus: {},
+  transferData: [],
 }
 
 const appReducer = (state = appStateInit, action) => {
@@ -82,6 +83,17 @@ const appReducer = (state = appStateInit, action) => {
     case ActionConstant.RESET_TERMINATE_ACCOUNT_STATUS:
       return Object.assign({}, state, {
         terminateAccountStatus: LoadState.pending,
+      })
+    case ActionConstant.SET_TRANSFER_DATA:
+      return Object.assign({}, state, {
+        transferData: [
+          ...action.assigns,
+          {
+            workspaceId: action.workspace.spaceId,
+            toUser: action.user,
+            ...LoadState.pending,
+          },
+        ],
       })
     default:
       return state

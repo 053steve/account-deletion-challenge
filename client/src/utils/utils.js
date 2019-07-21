@@ -15,3 +15,20 @@ export const getRefsValues = (refs, refName) => {
   }
   return collection
 }
+
+export const getTransferData = (transferOwnershipStatus, transferData) => {
+  const { workspaceId, toUserId, status } = transferOwnershipStatus
+  const updateData = _.reduce(
+    transferData,
+    (result, assign) => {
+      if (assign.workspaceId === workspaceId && assign.toUser.id === toUserId) {
+        result.push(Object.assign({}, assign, { status }))
+      } else {
+        result.push(assign)
+      }
+      return result
+    },
+    []
+  )
+  return updateData
+}

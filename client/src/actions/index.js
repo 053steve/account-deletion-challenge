@@ -9,7 +9,8 @@ export const ActionConstant = {
   TERMINATE_ACCOUNT_STATUS_SUCCESS: 'TERMINATE_ACCOUNT_STATUS_SUCCESS',
   TERMINATE_ACCOUNT_STATUS_FAIL: 'TERMINATE_ACCOUNT_STATUS_FAIL',
   TERMINATE_ACCOUNT_ERROR: 'TERMINATE_ACCOUNT_ERROR',
-  RESET_TERMINATE_ACCOUNT_STATUS: 'RESET_TERMINATE_ACCOUNT_STATUS'
+  RESET_TERMINATE_ACCOUNT_STATUS: 'RESET_TERMINATE_ACCOUNT_STATUS',
+  SET_TRANSFER_DATA: 'SET_TRANSFER_DATA',
 }
 
 // application state
@@ -81,5 +82,14 @@ export const terminateAccountError = error => {
 export const resetTerminateAccountStatus = () => {
   return {
     type: ActionConstant.RESET_TERMINATE_ACCOUNT_STATUS,
+  }
+}
+
+export const setTransferData = (assigns, user, workspace) => {
+  return {
+    type: ActionConstant.SET_TRANSFER_DATA,
+    assigns,
+    user,
+    workspace,
   }
 }

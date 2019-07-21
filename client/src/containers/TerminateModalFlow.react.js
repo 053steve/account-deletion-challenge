@@ -13,7 +13,11 @@ import {
 import { submitToSurveyMonkeyDeleteAccount } from '../services/SurveyService'
 import * as LoadState from '../constants/LoadState'
 import TransferModal from './TransferModal.react'
-import { getRefsValues, rediectToHomepage } from '../utils/utils'
+import {
+  getRefsValues,
+  rediectToHomepage,
+  getTransferData,
+} from '../utils/utils'
 
 class TerminateModalFlow extends React.Component {
   constructor(props) {
@@ -39,6 +43,7 @@ class TerminateModalFlow extends React.Component {
     terminateAccountError: React.PropTypes.func, //
     terminateAccountStatus: React.PropTypes.object, //
     resetTerminateAccountStatus: React.PropTypes.func, //
+    transferData: React.PropTypes.array,
     // rediectToHomepage: React.PropTypes.func, // dont need to be as pros anymore
   }
 
@@ -48,17 +53,17 @@ class TerminateModalFlow extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (LoadState.isLoaded(nextProps.terminateAccountStatus)) {
-      // this.props.rediectToHomepage()
       rediectToHomepage()
     }
   }
 
   getTransferData = () => {
-    console.log(this.props)
+    // console.log(this.props)
     const { workspaceId, toUserId, status } = this.props.transferOwnershipStatus
     const { transferData } = this.state
+
     const updateData = _.reduce(
-      transferData,
+      this.props.transferData,
       (result, assign) => {
         if (
           assign.workspaceId === workspaceId &&
@@ -73,23 +78,6 @@ class TerminateModalFlow extends React.Component {
       []
     )
     return updateData
-  }
-
-  assignToUser = (workspace, user) => {
-    const assigns = _.reject(
-      this.getTransferData(),
-      assign => assign.workspaceId === workspace.spaceId
-    )
-    this.setState({
-      transferData: [
-        ...assigns,
-        {
-          workspaceId: workspace.spaceId,
-          toUser: user,
-          ...LoadState.pending,
-        },
-      ],
-    })
   }
 
   submitSurvey = () => {
@@ -126,11 +114,6 @@ class TerminateModalFlow extends React.Component {
     }
   }
 
-  onAssignToUser = (workspace, toUser) => {
-    this.props.transferOwnership(this.props.user, toUser, workspace)
-    this.assignToUser(workspace, toUser)
-  }
-
   onChangeComment = e => {
     this.setState({ comment: e.target.value })
   }
@@ -156,12 +139,14 @@ class TerminateModalFlow extends React.Component {
   }
 
   renderTransferModal() {
-    console.log(this.props)
     return (
       <TransferModal
-        getTransferData={this.getTransferData()}
+        // getTransferData={getTransferData(
+        //   this.props.transferOwnershipStatus,
+        //   this.props.transferData
+        // )}
+        getTransferData={this.getTransferData}
         onSetNextPage={this.onSetNextPage}
-        onAssignToUser={this.onAssignToUser}
         requiredTransferWorkspaces={this.props.requiredTransferWorkspaces}
         deleteWorkspaces={this.props.deleteWorkspaces}
         loading={this.props.loading}
@@ -218,6 +203,7 @@ const mapStateToProps = state => {
     requiredTransferWorkspaces: state.appState.requiredTransferWorkspaces,
     deleteWorkspaces: state.appState.deleteWorkspaces,
     terminateAccountStatus: state.appState.terminateAccountStatus,
+    transferData: state.appState.transferData,
   }
 }
 
