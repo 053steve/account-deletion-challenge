@@ -14,13 +14,11 @@ import { getTransferData } from '../utils/utils'
 class TransferModal extends React.PureComponent {
 
   static propTypes = {
-    getTransferData: PropTypes.func,
     onSetNextPage: PropTypes.func,
     requiredTransferWorkspaces: PropTypes.array,
     deleteWorkspaces: PropTypes.array,
     loading: PropTypes.bool,
     user: PropTypes.object.isRequired,
-    isLoading: PropTypes.bool,
     transferOwnership: PropTypes.func,
     transferData: PropTypes.array,
     transferOwnershipStatus: React.PropTypes.object,
@@ -29,7 +27,10 @@ class TransferModal extends React.PureComponent {
 
   assignToUser = (workspace, user) => {
     const assigns = _.reject(
-      this.props.getTransferData(),
+      getTransferData(
+        this.props.transferOwnershipStatus,
+        this.props.transferData
+      ),
       assign => assign.workspaceId === workspace.spaceId
     )
     this.props.setTransferData(assigns, user, workspace)
@@ -41,7 +42,10 @@ class TransferModal extends React.PureComponent {
   }
 
   render() {
-    const transferData = this.props.getTransferData()
+    const transferData = getTransferData(
+      this.props.transferOwnership,
+      this.props.transferData
+    )
     const totalAssigned = transferData.length
     const totalWorkspaceRequiredTransfer = this.props.requiredTransferWorkspaces
       .length
@@ -76,11 +80,13 @@ class TransferModal extends React.PureComponent {
 }
 
 const mapStateToProps = state => {
-  console.log(state)
   return {
     user: state.appState.user,
     transferData: state.appState.transferData,
     transferOwnershipStatus: state.appState.transferOwnershipStatus,
+    requiredTransferWorkspaces: state.appState.requiredTransferWorkspaces,
+    deleteWorkspaces: state.appState.deleteWorkspaces,
+    loading: state.appState.loading,
   }
 }
 
