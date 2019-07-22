@@ -59,8 +59,11 @@ class TerminateModalFlow extends React.Component {
     const feedbackRefs = getRefsValues(this.refs, 'feedbackForm')
     const surveyPayload = {
       feedbackRefs,
-      comment: '',
+      comment: this.state.comment,
     }
+    // console.log(this.state)
+    console.log('surveyPayload')
+    console.log(surveyPayload)
     submitToSurveyMonkeyDeleteAccount(surveyPayload)
   }
 
@@ -69,6 +72,8 @@ class TerminateModalFlow extends React.Component {
       this.setState({ activeModal: 'feedback' })
     } else if (this.state.activeModal === 'feedback') {
       const feedbackRefs = getRefsValues(this.refs, 'feedbackForm')
+      console.log('feedbackRefs')
+      console.log(feedbackRefs)
       this.setState({
         activeModal: 'confirm',
         feedbacks: _.map(feedbackRefs, ref => ({
@@ -130,7 +135,6 @@ class TerminateModalFlow extends React.Component {
         title="Why would you leave us?"
         onSubmit={this.onSetNextPage}
         onBackButton={this.onGoToPreviousStep}
-        showCommentForm
         comment={this.state.comment}
         onChangeComment={this.onChangeComment}
       />

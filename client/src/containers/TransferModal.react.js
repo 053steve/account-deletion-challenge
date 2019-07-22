@@ -8,11 +8,9 @@ import { setTransferData } from '../actions'
 import { TransferOwnershipModal } from '../components/TransferOwnershipModal.react'
 import { WorkspaceGroupRows } from '../components/WorkSpaceGroupRows.react'
 import AssignOwnership from './AssignOwnership.react'
-import * as LoadState from '../constants/LoadState'
 import { getTransferData } from '../utils/utils'
 
 class TransferModal extends React.PureComponent {
-
   static propTypes = {
     onSetNextPage: PropTypes.func,
     requiredTransferWorkspaces: PropTypes.array,
